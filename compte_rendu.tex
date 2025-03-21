@@ -6,6 +6,45 @@
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
 \usepackage{hyperref}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage{color}
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{HTML}{C42043}
+\definecolor{backcolour}{HTML}{F2F2F2}
+\definecolor{bookColor}{cmyk}{0,0,0,0.90}  
+\color{bookColor}
+
+\lstset{upquote=true}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codepurple},
+    numberstyle=\numberstyle,
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize\ttfamily,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=10pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+}
+\lstset{style=mystyle}
+
+\newcommand\numberstyle[1]{%
+    \footnotesize
+    \color{codegray}%
+    \ttfamily
+    \ifnum#1<10 0\fi#1 |%
+}
 
 \title{TP SGBD : \\Modèle de données}
 \author{Marc Robison\\
@@ -15,5 +54,55 @@
 \begin{document}
 
 \maketitle
+
+\subsection{Modèle conceptuel}
+
+\begin{tt}
+  Livre(\underline{id\_livre}, titre, résumés, dates\_de\_publication, nombre\_exemplaires,\\ date ajout, \#id\_Auteurs(Auteurs), \#id\_Editeur(Editeurs), \#id\_Cathégorie(Cathégories))
+
+\smallskip
+Auteurs(\underline{id\_auteurs}, Nom, Prénom, \#id\_livre(livre))
+
+\smallskip
+Editeur(\underline{id\_editeur}, nom\_editeur, \#id\_Livre(livre))
+
+\smallskip
+Cathégorie(\underline{id\_cathégorie}, nom\_cathégories, \#id\_Livre(livre))
+\smallskip
+
+Membre(\underline{id\_Membre}, Nom, Prénom, coordonnées, domicile, courrier, \#id\_Emprunts, \#id\_Avis)
+\smallskip
+
+Amendes(\underline{id\_Amendes}, prix, \#id\_Membres, \#id\_Livre)
+\smallskip
+
+Emprunts(\underline{id\_Emprunts}, date\_emprunt, date\_retour, \#id\_Membre, \#id\_Livre)
+\smallskip
+
+Avis(\underline{id\_Avis}, \#id\_Livre, Avis)
+\smallskip
+
+Reservation(\underline{id\_Reservation}, \#id\_Membre, \#id\_Livre)
+\end{tt}
+
+
+\bigskip
+Le modèle conceptuel repose sur les éléments suivants :
+
+\begin{enumerate}
+  \item Livre : Représente les livres de la bibliothèque avec des informations comme le titre, le résumé, la date de publication et le nombre d'exemplaires. Il est lié aux \textbf{auteurs}, à un \textbf{éditeur} et à une \textbf{catégorie}.
+  \item Auteurs : Chaque auteur a un identifiant, un nom et un prénom. Il est lié à un ou plusieurs \textbf{livres}.
+\item Éditeur : Contient les informations sur les éditeurs, avec un lien vers les livres qu'ils ont publiés.
+\item Catégorie : Permet de classer les livres en différentes catégories.
+\item Membre : Représente les utilisateurs de la bibliothèque, avec leurs coordonnées et d'autres informations. Un membre peut être lié à des \textbf{emprunts}, des \textbf{avis}, des \textbf{réservations}, et des \textbf{amendes}.
+\item Amendes : Gère les pénalités financières infligées aux membres pour les retards ou autres infractions. Chaque amende est liée à un \textbf{membre} et un \textbf{livre}.
+\item Emprunts : Enregistre les prêts de livres aux membres, avec les dates d’emprunt et de retour.
+\item Avis : Permet aux membres de laisser des avis sur les livres.
+\item Réservation : Gère les réservations de livres par les membres.
+\end{enumerate}
+
+
+
+
 
 \end{document}
